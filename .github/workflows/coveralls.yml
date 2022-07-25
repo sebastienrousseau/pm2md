@@ -39,9 +39,9 @@ jobs:
         run: |
           yarn run markdown
 
-      - name: Compiling
+      - name: Building
         run: |
-          yarn run compile
+          yarn run build
 
       - name: Testing & Coverage
         run: |
