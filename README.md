@@ -1,6 +1,7 @@
 [![npm](https://img.shields.io/npm/v/sebastienrousseau/pm2md.svg?style=for-the-badge\&color=f14041)][3]
 ![Codacy grade](https://img.shields.io/codacy/grade/40d370244f3843f389094afe7719c4e4?style=for-the-badge)
-[![Coverage Status](https://img.shields.io/coveralls/github/sebastienrousseau/pm2md/solid.svg?branch=main&style=for-the-badge\&color=blueviolet)](https://coveralls.io/github/sebastienrousseau/pm2md?branch=main)
+[![Coverage Status](https://coveralls.io/repos/github/sebastienrousseau/pm2md/badge.svg?branch=main)](https://coveralls.io/github/sebastienrousseau/pm2md?branch=main)
+<!-- [![Coverage Status](https://img.shields.io/coveralls/github/sebastienrousseau/pm2md/solid.svg?branch=main&style=for-the-badge\&color=blueviolet)](https://coveralls.io/github/sebastienrousseau/pm2md?branch=main) -->
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge\&color=ff69b4)][4]
