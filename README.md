@@ -2,6 +2,7 @@
 
 [![Banner representing Postman2Markdown (PM2MD)][pm2md]][0]
 
+
 [![npm][npm]][3]
 [![codacy][codacy]][9]
 [![Coverage Status](https://coveralls.io/repos/github/sebastienrousseau/pm2md/badge.svg?branch=main)][8]
