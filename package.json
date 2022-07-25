@@ -60,26 +60,26 @@
         "test": "__tests__"
     },
     "engines": {
-      "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
-  },
-  "files": [
-      "dist/**/*"
-  ],
-  "funding": [
-      {
-          "type": "github",
-          "url": "https://github.com/sponsors/sebastienrousseau"
-      },
-      {
-          "type": "paypal",
-          "url": "https://paypal.me/wwdseb"
-      }
-  ],
-  "homepage": "https://pm2md.io",
-  "keywords": [
-      "crypto-cli"
-  ],
-  "license": "MIT",
+        "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
+    },
+    "files": [
+        "dist/**/*"
+    ],
+    "funding": [
+        {
+            "type": "github",
+            "url": "https://github.com/sponsors/sebastienrousseau"
+        },
+        {
+            "type": "paypal",
+            "url": "https://paypal.me/wwdseb"
+        }
+    ],
+    "homepage": "https://pm2md.io",
+    "keywords": [
+        "pm2md"
+    ],
+    "license": "MIT",
     "license_URI": "http://www.opensource.org/licenses/mit-license.php",
     "main": "./dist/index.js",
     "name": "pm2md",
@@ -93,25 +93,30 @@
         "url": "git+https://github.com/sebastienrousseau/pm2md.git"
     },
     "scripts": {
-        "compile": "npx tsc --build tsconfig.json",
-        "compile:watch": "npx tsc -w",
-        "clean": "npx rimraf dist coverage node_modules",
-        "docs": "npx typedoc --options typedoc.json src/**.ts",
-        "filesize:distribution": "npx filesizes dist/ > dist/report.txt",
+        "build": "tsc --build tsconfig.json && yarn copy",
+        "build:watch": "tsc -w",
+        "clean": "rimraf dist coverage node_modules",
+        "copy": "yarn copy:copyright && yarn copy:license && yarn copy:readme && yarn copy:package",
+        "copy:copyright": "cp COPYRIGHT dist/",
+        "copy:license": "cp LICENSE dist/",
+        "copy:package": "cp ./package.json ./dist/",
+        "copy:readme": "cp README.md dist/",
+        "docs": "typedoc --options typedoc.json src/**.ts",
+        "filesize:distribution": "filesizes dist/ > dist/report.txt",
         "format": "prettier --write src/**/*.ts",
-        "lint": "npx eslint ./src/**/*.ts ./__tests__/**/*.ts",
-        "lint:fix": "npx eslint --fix ./src/**/*.ts ./__tests__/**/*.ts",
-        "markdown": "npx remark ./*.md packages/**/*.md --rc-path ./.remarkrc --quiet",
+        "lint": "eslint ./src/**/*.ts ./__tests__/**/*.ts",
+        "lint:fix": "eslint --fix ./src/**/*.ts ./__tests__/**/*.ts",
+        "markdown": "yarn remark ./*.md packages/**/*.md --rc-path ./.remarkrc --quiet",
         "postinstall": "husky install",
-        "prepack": "npx exec build",
-        "release": "npx exec release:prepare && yarn release:publish",
-        "release:prepare": "npx exec pack",
-        "release:publish": "npx exec publish --access public --ignore-scripts --@OWNER:registry='https://registry.npmjs.org' && npm publish",
+        "prepack": "yarn build",
+        "release": "yarn release:prepare && yarn release:publish",
+        "release:prepare": "yarn pack",
+        "release:publish": "yarn publish --access public --ignore-scripts --@OWNER:registry='https://registry.npmjs.org' && npm publish",
         "start": "node ./dist/src/bin/global.js",
-        "test": "npx jest --coverage --config jest.config.ts",
-        "test:watch": "npx jest --watch",
-        "watch": "npx jest --watch --config jest.config.ts"
+        "test": "jest --coverage --config jest.config.ts",
+        "test:watch": "jest --watch",
+        "watch": "jest --watch --config jest.config.ts"
     },
     "typings": "dist/index.d.ts",
-    "version": "1.0.7"
+    "version": "0.0.1"
 }
