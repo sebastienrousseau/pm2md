@@ -81,8 +81,9 @@
     ],
     "license": "MIT",
     "license_URI": "http://www.opensource.org/licenses/mit-license.php",
+    "lockfileVersion": 1,
     "main": "./dist/index.js",
-    "name": "pm2md",
+    "name": "@sebastienrousseau/pm2md",
     "preferGlobal": true,
     "publishConfig": {
         "access": "public",
