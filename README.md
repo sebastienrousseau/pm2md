@@ -71,7 +71,7 @@ directly in this repository:
 pm2md is released under the
 [MIT License](https://opensource.org/licenses/MIT).
 
-[pm2md]: https://raw.githubusercontent.com/sebastienrousseau/crypto-service/master/assets/pm2md-logo.svg "Postman2Markdown (PM2MD)" 
+[pm2md]: https://raw.githubusercontent.com/sebastienrousseau/pm2md/master/assets/pm2md-logo.svg "Postman2Markdown (PM2MD)" 
 [npm]: https://img.shields.io/npm/v/sebastienrousseau/pm2md.svg?style=for-the-badge\&color=f14041
 [codacy]: https://img.shields.io/codacy/grade/f20b5f4e5e6649a9a4ec25df87b6dc08?style=for-the-badge
 [contributors-shield]: https://img.shields.io/github/contributors/sebastienrousseau/pm2md.svg?style=for-the-badge
