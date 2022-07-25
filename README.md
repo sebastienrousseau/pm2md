@@ -11,7 +11,7 @@
 [![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge\&color=ff69b4)][4]
 ![Made with Love][7]
 
-**[Website](https://pm2md.o) • [Documentation](https://pm2md/docs/) 
+**[Website][0] • [Documentation](https://pm2md/docs/) 
 • [Report Bug](https://github.com/sebastienrousseau/pm2md/issues) 
 • [Request Feature](https://github.com/sebastienrousseau/pm2md/issues) 
 • [Contributing Guidelines](https://github.com/sebastienrousseau/pm2md/blob/master/.github/CONTRIBUTING.md)**
@@ -134,6 +134,8 @@ Licensed under the [MIT](LICENSE) license.
 |---------|
 |[![Sebastien Rousseau](https://avatars0.githubusercontent.com/u/1394998?s=250)](https://sebastienrousseau.co.uk)|
 |[Sebastien Rousseau](https://github.com/sebastienrousseau)|
+
+![divider][divider]
 
 [codacy]: https://img.shields.io/codacy/grade/f20b5f4e5e6649a9a4ec25df87b6dc08?style=for-the-badge "codacy"
 [contributors-shield]: https://img.shields.io/github/contributors/sebastienrousseau/pm2md.svg?style=for-the-badge "contributors"
