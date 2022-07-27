@@ -14,6 +14,7 @@ const args = minimist(process.argv.slice(2));
 console.log(args);
 const path = args[`_`];
 export function init() {
+  console.log(path);
   if (path.length > 0) {
     console.log(chalk.green(`Reading file ${path[0]}`))
 
@@ -32,7 +33,7 @@ export function init() {
       console.log(chalk.red(`Path is not valid or the file not exist.`));
     }
   } else {
-    console.log(chalk.red(`Path of json file is required.`));
+      console.log(chalk.red(`Path of json file is required.`));
   }
 }
 

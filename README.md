@@ -147,7 +147,7 @@ Licensed under the [MIT](LICENSE) license.
 [0]: https://pm2md.io
 [1]: https://www.postman.com/downloads/
 [2]: https://www.postman.com/
-[3]: https://www.npmjs.com/@sebastienrousseau/pm2md
+[3]: https://www.npmjs.com/package/@sebastienrousseau/pm2md
 [4]: https://opensource.org/licenses/MIT
 [5]: https://raw.githubusercontent.com/sebastienrousseau/pm2md/master/resources/export_collection.png
 [6]: https://raw.githubusercontent.com/sebastienrousseau/pm2md/master/resources/export.png

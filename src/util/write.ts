@@ -15,6 +15,7 @@ export function writeFile(content: string, fileName: string) {
   fs.writeFile(fileName, content, (err) => {
     if (err) {
       console.error(chalk.red(`Error when writing file ${fileName}`));
+      console.error(err);
       throw err;
     }
     console.log(chalk.green(`File was created correctly ${fileName}`));
@@ -25,7 +26,9 @@ export function writeFile(content: string, fileName: string) {
  * Create a directory recursively
  * @param {string} dirpath
  */
+
 export function writeDirectory(dirpath: fs.PathLike) {
+  console.log(dirpath);
   if (fs.existsSync(dirpath)) return;
 
   fs.mkdirSync(dirpath, {
