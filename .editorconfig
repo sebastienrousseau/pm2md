@@ -1,14 +1,14 @@
-#       ____                  _          ____                  _
-#      / ___|_ __ _   _ _ __ | |_ ___   / ___|  ___ _ ____   _(_) ___ ___
-#     | |   | '__| | | | '_ \| __/ _ \  \___ \ / _ \ '__\ \ / / |/ __/ _ \
-#     | |___| |  | |_| | |_) | || (_) |  ___) |  __/ |   \ V /| | (_|  __/
-#      \____|_|   \__, | .__/ \__\___/  |____/ \___|_|    \_/ |_|\___\___|
-#                 |___/|_|
-# Crypto Service Suite
-# https://crypto-service.co/
+#  ___ __  __ ___ __  __ ___
+# | _ \  \/  |_  )  \/  |   \
+# |  _/ |\/| |/ /| |\/| | |) |
+# |_| |_|  |_/___|_|  |_|___/
 #
-# Copyright (c) Sebastien Rousseau 2022. All rights reserved
+# PM2MD - Postman to Markdown
+# https://pm2md.com
+#
+# Copyright (c) Sebastien Rousseau 2022 - 2023. All rights reserved
 # Licensed under the MIT license
+# See LICENSE file in the project root for full license information.
 #
 # http://editorconfig.org
 #
