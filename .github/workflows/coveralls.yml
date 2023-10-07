@@ -26,6 +26,8 @@ jobs:
         # run: yarn --frozen-lockfile --ignore-scripts
         run: |
           yarn install
+          yarn global add pnpm
+          pnpm install --frozen-lockfile --ignore-scripts
 
       # - name: Run lint fix
       #   run: |
