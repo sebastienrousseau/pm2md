@@ -107,7 +107,7 @@
         "format": "prettier --write src/**/*.ts",
         "lint": "eslint ./src/**/*.ts ./__tests__/**/*.ts",
         "lint:fix": "eslint --fix ./src/**/*.ts ./__tests__/**/*.ts",
-        "markdown": "npx pnpm run remark ./*.md packages/**/*.md --rc-path ./.remarkrc --quiet",
+        "markdown": "npx pnpm remark ./*.md packages/**/*.md --rc-path ./.remarkrc --quiet",
         "postinstall": "husky install",
         "prepack": "pnpm run build",
         "release": "pnpm run release:prepare && pnpm run release:publish",
