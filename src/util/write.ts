@@ -2,61 +2,48 @@
 // SPDX-License-Identifier: Apache-2.0
 // SPDX-License-Identifier: MIT
 
-import fs from "fs";
-import chalk from "chalk";
+import path from 'path';
+import fs from 'fs';
 
-/**
- * Create a file with given content
- * @param {string} content - File content
- * @param {string} fileName - File name
-*/
-export function writeFile(content: string, fileName: string) {
+export function writeFile(content: string, jsonFilePath: string) {
+  try {
+    // Get file name from path
+    const fileName = path.basename(jsonFilePath);
 
-  // Replace spaces in file name with underscores
-  fileName = fileName.replaceAll(" ", "_");
+    // Check if fileName is empty
+    if (!fileName) {
+      console.error('❯ File name is empty!\n');
+      return;
+    }
+    console.log(`❯ File name: ${fileName}\n`);
 
-  // Append .md extension to file name
-  fileName = fileName + ".md";
+    // Append .md extension
+    const mdFileName = `${path.parse(fileName).name}.md`;
 
-  // Get folder path by removing file name
-  let folder = fileName.replace(/\/(?![^\/]+)?$/, "");
+    // Folder to write to
+    const outDir = './dist';
 
-  // Create folder recursively
-  writeDirectory(folder);
+    // Construct full file path
+    const filePath = path.join(outDir, mdFileName);
 
-  // Write content to file
-  fs.writeFile(fileName, content, (err) => {
-
-    // Log and throw error if exists
-    if (err) {
-      console.error(chalk.red(`Error when writing file ${fileName}`));
-      console.error(err);
-      throw err;
+    // Make sure folder exists
+    if (!fs.existsSync(outDir)) {
+      fs.mkdirSync(outDir, { recursive: true})
     }
 
-    // Log success message
-    console.log(chalk.green(`File was created correctly ${fileName}`));
-  });
+    // Write Markdown file
+    fs.writeFileSync(filePath, content);
+
+    console.log(`❯ Wrote to ${filePath}\n`);
+  } catch (error) {
+    console.error('❯ An error occurred:', error);
+  }
 }
 
-/**
- * Create a directory recursively
- * @param {string} dirpath - Path for directory
-*/
 export function writeDirectory(dirpath: fs.PathLike) {
 
-  // Log dirname
-  console.log(dirpath);
-
-  // Check if directory exists
-  if (fs.existsSync(dirpath)) return;
-
-  // Create directory recursively
-  fs.mkdirSync(dirpath, {recursive: true});
+  if (!fs.existsSync(dirpath)) {
+    fs.mkdirSync(dirpath, { recursive: true })
+  }
 
 }
-
-export default {
-  writeFile,
-  writeDirectory
-};

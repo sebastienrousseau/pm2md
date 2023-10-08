@@ -3,13 +3,14 @@
 // SPDX-License-Identifier: MIT
 
 // Import types for type checking
-import * as types from "../types/types";
+import * as types from "../typings/types";
+import { jsonResponse } from "../typings/types";
 
 /**
  * Read auth section for a method
  * @param {object} data - Auth data object
  * @returns {string} Markdown string for auth section
-*/
+ */
 export function readAuthorization(data: types.jsonAuth) {
   // Initialize empty markdown string
   let markdown = "";
@@ -46,7 +47,7 @@ export function readAuthorization(data: types.jsonAuth) {
  * Read request options for a method
  * @param {object} request - Request data object
  * @returns {string} Markdown string for request options
-*/
+ */
 export function readRequestOptions(request: types.jsonRequest): string {
   // Initialize empty markdown string
   let markdown = "";
@@ -107,7 +108,7 @@ export function readQueryParams(url: types.jsonQuery) {
 /**
  * Read body objects for a method
  * @param {object} body - Body data object
-*/
+ */
 export function readFormDataBody(body: types.jsonBody) {
   let markdown = ""; // Initialize empty markdown string
 
@@ -135,7 +136,9 @@ export function readFormDataBody(body: types.jsonBody) {
 
       body.formdata.map((form) => {
         // Add Markdown table row for each form data field
-        markdown += `|${form.key}|${form.value !== undefined ? form.value.replace(/\\n/g, "") : ""}|${form.type}|\n`;
+        markdown += `|${form.key}|${
+          form.value !== undefined ? form.value.replace(/\\n/g, "") : ""
+        }|${form.type}|\n`;
       });
 
       markdown += `\n`;
@@ -149,8 +152,8 @@ export function readFormDataBody(body: types.jsonBody) {
 /**
  * Read response objects for a method
  * @param {Array} responses - Response data objects
-*/
-export function readResponse(responses: types.jsonResponse) {
+ */
+export function readResponse(responses: jsonResponse[]) {
   // Initialize empty markdown string
   let markdown = "";
 
@@ -174,7 +177,7 @@ export function readResponse(responses: types.jsonResponse) {
 /**
  * Read data for a single API method
  * @param {object} method - Method data object
-*/
+ */
 export function readMethods(method: types.jsonReadMethods): string {
   // Initialize empty markdown string
   let markdown = "";
@@ -221,7 +224,7 @@ export function readMethods(method: types.jsonReadMethods): string {
  * Read all data in Postman collection
  * @param {Array} items - Collection items
  * @param {number} folderDeep - Depth of current folder
-*/
+ */
 export function readItems(items: any[], folderDeep = 1) {
   // Initialize empty markdown string
   let markdown = "";
@@ -249,5 +252,5 @@ export default {
   readQueryParams,
   readResponse,
   readMethods,
-  readItems
+  readItems,
 };

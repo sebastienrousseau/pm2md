@@ -1,15 +1,31 @@
 {
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist"],
+
   "compilerOptions": {
-    "outDir": "./dist",
-    "rootDir": "./src"
-  },
-  "exclude": [
-    "node_modules",
-    "dist",
-    "__tests__"
-  ],
-  "extends": "./tsconfig.base.json",
-  "include": [
-    "src"
-  ]
+
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+
+    "target": "es2021",
+    "lib": ["es2021"],
+
+    "moduleResolution": "node",
+    "baseUrl": "src",
+
+    "outDir": "dist",
+
+    "strict": true,
+    "noImplicitAny": true,
+
+    "sourceMap": true,
+    "declaration": true,
+
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+
+    "skipLibCheck": true
+  }
 }

@@ -1,5 +1,14 @@
 {
   "extends": [
     "@sebastienrousseau/eslint-config"
-  ]
+  ],
+  "ignorePatterns": ["docs/"],
+  "settings": {
+    "import/resolver": {
+      "alias": {
+        "map": [["@util", "./src/util"]],
+        "extensions": [".js", ".jsx", ".ts", ".tsx", ".json"]
+      }
+    },
+  },
 }

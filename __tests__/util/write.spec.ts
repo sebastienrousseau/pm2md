@@ -23,9 +23,9 @@ describe("Test `writeFile`", () => {
     const data = {
       content: "./examples/Twitter_API_v2.postman_collection.json",
       fileName: "./examples/Twitter_API_v2",
-    }
-    expect(data.content).toStrictEqual("./examples/Twitter_API_v2.postman_collection.json")
-    expect(data.fileName).toStrictEqual("./examples/Twitter_API_v2")
+    };
+    expect(data.content).toStrictEqual("./examples/Twitter_API_v2.postman_collection.json");
+    expect(data.fileName).toStrictEqual("./examples/Twitter_API_v2");
   });
 });
 
@@ -46,12 +46,12 @@ describe("Test `writeFile`", () => {
 });
 
 describe("Test `writeFile`", () => {
-  it('should write a file', async () => {
+  it("should write a file", async() => {
     const content = "hello";
     const fileName = "./__tests__/hello.json";
-    const result = async () => {
+    const result = async() => {
       writeFile(content, fileName);
-    }
+    };
     Promise.resolve(result).then(() => {
       expect(fs.existsSync(fileName)).toBeTruthy();
     });
@@ -59,12 +59,12 @@ describe("Test `writeFile`", () => {
 });
 
 describe("Test `writeFile`", () => {
-  it('should write a file', async () => {
+  it("should write a file", async() => {
     const content = "hello";
     const fileName = "./__tests__/hello.json";
-    const result = async () => {
+    const result = async() => {
       writeFile(content, fileName);
-    }
+    };
     await result();
     Promise.resolve(result).then(() => {
       expect(result).toBeInstanceOf(Function);
@@ -73,12 +73,12 @@ describe("Test `writeFile`", () => {
 });
 
 describe("Test `writeFile`", () => {
-  it('should write a file', async () => {
+  it("should write a file", async() => {
     const content = "hello";
     const fileName = "./__tests__/hello.json";
-    const result = async () => {
+    const result = async() => {
       writeFile(content, fileName);
-    }
+    };
     await result();
     Promise.resolve(result).then(() => {
       // expect(result).toThrowError('File not found');
@@ -86,14 +86,14 @@ describe("Test `writeFile`", () => {
   });
 });
 
-it('should throw an error when no properties are specified', async () => {
+it("should throw an error when no properties are specified", async() => {
   expect(writeFile).toThrowError("Cannot read properties of undefined (reading 'replaceAll')");
 });
 
 describe("Test 'writeDirectory'", () => {
-  it('should write a directory', async () => {
+  it("should write a directory", async() => {
     const dirpath = "./__tests__/hello";
-    const result = async () => {
+    const result = async() => {
       writeDirectory(dirpath);
     };
     await result();

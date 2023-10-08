@@ -3,7 +3,7 @@
     "cleanOutputDir": true,
     "entryPointStrategy": "expand",
     "entryPoints": [
-        "./src"
+        "."
     ],
     "exclude": [
         "src/!(@types)/*/*"
@@ -13,12 +13,12 @@
     "excludePrivate": true,
     "githubPages": false,
     "logLevel": "Verbose",
-    "name": "📦 pm2md",
+    "name": "pm2md",
     "out": "docs",
     "plugin": [
         "typedoc-plugin-missing-exports",
     ],
-    "readme": "CONTRIBUTING.md",
+    "readme": "README.md",
     "sort": [
         "source-order"
     ]

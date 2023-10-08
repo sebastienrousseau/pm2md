@@ -1,31 +1,30 @@
-# 🏤 PM2MD
+# PM2MD
 
 [![Banner representing Postman2Markdown (PM2MD)][pm2md]][0]
 
 [![npm][npm]][3]
 [![codacy][codacy]][9]
-[![Coverage Status](https://coveralls.io/repos/github/sebastienrousseau/pm2md/badge.svg?branch=main)][8]
 [![Coverage Status](https://img.shields.io/coveralls/github/sebastienrousseau/pm2md/solid.svg?branch=main&style=for-the-badge\&color=blueviolet)][8]
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge\&color=ff69b4)][4]
 ![Made with Love][7]
 
-**[Website][0] • [Documentation](https://pm2md/docs/) 
-• [Report Bug](https://github.com/sebastienrousseau/pm2md/issues) 
-• [Request Feature](https://github.com/sebastienrousseau/pm2md/issues) 
+**[Website][0] • [Documentation](https://pm2md/docs/)
+• [Report Bug](https://github.com/sebastienrousseau/pm2md/issues)
+• [Request Feature](https://github.com/sebastienrousseau/pm2md/issues)
 • [Contributing Guidelines](https://github.com/sebastienrousseau/pm2md/blob/master/.github/CONTRIBUTING.md)**
 
 ***
 
-## 👋 Welcome to Postman2Markdown (PM2MD) 
+## Welcome to Postman2Markdown (PM2MD)
 
 This package generates generates a markdown documentation from a Postman
 collection file.
 
 ![divider][divider]
 
-## Getting Started
+## Getting Started with Development
 
 👉 Before you begin: » Make sure you have downloaded [Postman][1] and installed
 it on your computer. Alternatively, you can sign up to use the [web version][2]
@@ -43,7 +42,7 @@ of Postman.
 
 ## Install
 
-```npm
+```bash
 npm install -g pm2md
 ```
 
@@ -54,7 +53,7 @@ npm install -g pm2md
 Execute pm2md specifying the collection file.
 
 ```bash
-pm2md postman_collection.json 
+pm2md postman_collection.json
 ```
 
 ```bash
@@ -63,6 +62,7 @@ Generating markdown file ...
 Documentation was created correctly examples/postman_collection.md
 
 ```
+
 The package will create an .md file.
 
 Example of file generated
@@ -70,7 +70,7 @@ Example of file generated
 
 ![divider][divider]
 
-## 🚥 Semantic Versioning Policy
+## Semantic Versioning Policy
 
 For transparency into our release cycle and in striving to maintain backward
 compatibility, `pm2md` follows [semantic versioning](http://semver.org/)
@@ -78,20 +78,20 @@ and [ESLint's Semantic Versioning Policy](https://github.com/eslint/eslint#seman
 
 ![divider][divider]
 
-## ✅ Changelog
+## Changelog
 
 - [GitHub Releases](https://github.com/sebastienrousseau/pm2md/releases)
 
 ![divider][divider]
 
-## 📖 Code of Conduct
+## Code of Conduct
 
 We are committed to preserving and fostering a diverse, welcoming community.
 Please read our [Code of Conduct](https://github.com/sebastienrousseau/pm2md/blob/master/.github/CODE-OF-CONDUCT.md).
 
 ![divider][divider]
 
-## ⭐️ Our Values
+## Our Values
 
 - We believe perfection must consider everything.
 - We take our passion beyond code into our daily practices.
@@ -99,10 +99,10 @@ Please read our [Code of Conduct](https://github.com/sebastienrousseau/pm2md/blo
 
 ![divider][divider]
 
-## ❤️ Contributing
+## Contributing
 
-Thank you for using PM2MD! If you like the library, it would be 
-great if you can give it a star ⭐ on [GitHub][17].
+Thank you for using PM2MD! If you like the library, it would be great if you can
+give it a star ⭐ on [GitHub][17].
 
 There are also many ways in which you can participate in this project, for
 example:
@@ -117,7 +117,7 @@ for further details on the process for submitting pull requests to us.
 
 ![divider][divider]
 
-## 🥂 License
+## License
 
 Copyright (c) Sebastien Rousseau. All rights reserved.
 
@@ -125,7 +125,7 @@ Licensed under the [MIT](LICENSE) license.
 
 ![divider][divider]
 
-## 💖 Acknowledgements
+## Acknowledgements
 
 [PM2MD][0] is beautifully crafted by these people and a bunch of awesome
 [contributors][contributors-url].
@@ -142,9 +142,9 @@ Licensed under the [MIT](LICENSE) license.
 [divider]: https://raw.githubusercontent.com/sebastienrousseau/pm2md/master/assets/divider.svg "divider"
 [forks-shield]: https://img.shields.io/github/forks/sebastienrousseau/pm2md.svg?style=for-the-badge "forks"
 [npm]: https://img.shields.io/npm/v/sebastienrousseau/pm2md.svg?style=for-the-badge\&color=f14041 "npm"
-[pm2md]: https://raw.githubusercontent.com/sebastienrousseau/pm2md/master/assets/pm2md-logo.svg "Postman2Markdown (PM2MD)" 
+[pm2md]: https://raw.githubusercontent.com/sebastienrousseau/pm2md/master/assets/pm2md-logo.svg "Postman2Markdown (PM2MD)"
 
-[0]: https://pm2md.io
+[0]: https://pm2md.com
 [1]: https://www.postman.com/downloads/
 [2]: https://www.postman.com/
 [3]: https://www.npmjs.com/package/@sebastienrousseau/pm2md

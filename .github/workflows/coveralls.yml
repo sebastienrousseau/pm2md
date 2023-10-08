@@ -23,15 +23,14 @@ jobs:
           node-version: 16
 
       - name: Install yarn dependencies
-        # run: yarn --frozen-lockfile --ignore-scripts
         run: |
           yarn install
           yarn global add pnpm
           pnpm install --frozen-lockfile --ignore-scripts
 
-      # - name: Run lint fix
-      #   run: |
-      #     yarn run lint:fix
+      - name: Run lint fix
+        run: |
+          yarn run lint:fix
 
       - name: Run prettier
         run: |
