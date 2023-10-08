@@ -28,9 +28,11 @@
   "engines": {
     "node": "^16.0.0 || >=18.0.0"
   },
+  "git-checks": false,
   "preferGlobal": true,
   "scripts": {
-    "build": "npx tsc --build tsconfig.json && pnpm run copy && pnpm run filesize:distribution",
+    "build:pm2md": "npx tsc --build tsconfig.json && pnpm run copy && pnpm run filesize:distribution",
+    "build": "pnpm run build:pm2md && cat ./package.json | grep -v '\"private\":' > dist/package.json && pnpm pack ./dist",
     "build:watch": "npx tsc -w",
     "clean": "npx rimraf dist coverage node_modules",
     "copy": "npx pnpm run copy:copyright && npm run copy:license && npm run copy:readme && npm run copy:package",
@@ -45,10 +47,9 @@
     "lint:fix": "npx eslint --fix ./src/**/*.ts ./__tests__/**/*.ts",
     "markdown": "npx remark ./*.md ./**/*.md --rc-path ./.remarkrc --quiet",
     "postinstall": "npx husky install",
-    "prepack": "npx pnpm run build",
-    "release": "npm run release:prepare && npm run release:publish",
-    "release:prepare": "npm run pack",
-    "release:publish": "npm run publish --access public --ignore-scripts --@OWNER:registry='https://registry.npmjs.org' && npm publish",
+    "release:prepare": "pnpm publish $(node -p \"p=require('./package.json');p.name+'-'+p.version+'.tgz'\")",
+    "release:publish": "pnpm publish --access public --ignore-scripts --@OWNER:registry='https://registry.npmjs.org'",
+    "release": "pnpm run build && pnpm run release:prepare && pnpm run release:publish",
     "start": "node ./dist/bin/pm2md.js",
     "test": "npx pnpm jest --coverage --config jest.config.js"
   },
