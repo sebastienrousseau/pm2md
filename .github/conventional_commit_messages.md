@@ -13,7 +13,7 @@
 # Licensed under the MIT license
 #
 -->
-# Conventional Commit Messages 
+# Conventional Commit Messages
 See how a minor change to your commit message style can make a difference. [Examples](#examples)
 
 **Have a look at CLI util [git-conventional-commits](https://github.com/qoomon/git-conventional-commits) to ensure this conventions and generate changelogs**
