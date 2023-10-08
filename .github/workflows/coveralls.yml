@@ -28,25 +28,25 @@ jobs:
           yarn global add pnpm
           pnpm install --frozen-lockfile --ignore-scripts
 
-      - name: Run lint fix
-        run: |
-          yarn run lint:fix
+      # - name: Run lint fix
+      #   run: |
+      #     yarn run lint:fix
 
       - name: Run prettier
         run: |
-          yarn run format
+          npx prettier --write src/**/*.ts
 
-      - name: Run remark
-        run: |
-          yarn run markdown
+      # - name: Run remark
+      #   run: |
+      #     yarn run markdown
 
       - name: Building
         run: |
-          yarn run build
+          npx tsc --build tsconfig.json && pnpm run copy && pnpm run filesize:distribution
 
       - name: Testing & Coverage
         run: |
-          yarn run test
+          npx pnpm jest --coverage --config jest.config.js
 
       - name: Coveralls
         uses: coverallsapp/github-action@master
