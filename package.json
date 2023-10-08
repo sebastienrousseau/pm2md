@@ -46,7 +46,6 @@
     "lint": "npx eslint ./src/**/*.ts ./__tests__/**/*.ts",
     "lint:fix": "npx eslint --fix ./src/**/*.ts ./__tests__/**/*.ts",
     "markdown": "npx remark ./*.md ./**/*.md --rc-path ./.remarkrc --quiet",
-    "postinstall": "npx husky install",
     "release:prepare": "pnpm publish $(node -p \"p=require('./package.json');p.name+'-'+p.version+'.tgz'\")",
     "release:publish": "pnpm publish --access public --ignore-scripts --@OWNER:registry='https://registry.npmjs.org'",
     "release": "pnpm run build && pnpm run release:prepare && pnpm run release:publish",
@@ -64,8 +63,6 @@
     "typescript": "^5.2.2"
   },
   "devDependencies": {
-    "@commitlint/cli": "^17.7.2",
-    "@commitlint/config-conventional": "^17.7.0",
     "@sebastienrousseau/eslint-config": "^0.0.2",
     "@sebastienrousseau/jsdoc-config": "^0.0.5",
     "@sebastienrousseau/markdownlint-config": "^0.0.1",
