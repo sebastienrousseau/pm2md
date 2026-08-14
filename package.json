@@ -3,7 +3,9 @@
   "version": "0.0.2",
   "description": "Generates a markdown documentation from a Postman collection file.",
   "homepage": "https://pm2md.com",
-  "keywords": ["pm2md"],
+  "keywords": [
+    "pm2md"
+  ],
   "author": "Sebastien Rousseau <sebastienrousseau@users.noreply.github.com>",
   "license": "MIT",
   "license_URI": "http://www.opensource.org/licenses/mit-license.php",
@@ -95,7 +97,9 @@
     "src": "src",
     "test": "__tests__"
   },
-  "files": ["dist/**/*"],
+  "files": [
+    "dist/**/*"
+  ],
   "main": "./dist/index.js",
   "typings": "dist/index.d.ts",
   "type": "commonjs",
@@ -108,10 +112,32 @@
     "fileMap": [
       {
         "basePath": "dist",
-        "files": ["**/*"]
+        "files": [
+          "**/*"
+        ]
       }
     ],
     "source": "git",
     "target": "git://github.com/sebastienrousseau/pm2md.git"
+  },
+  "pnpm": {
+    "overrides": {
+      "@babel/core@>=7.0.0 <8.0.0": "^7.29.6",
+      "brace-expansion@>=1.0.0 <2.0.0": "^1.1.17",
+      "brace-expansion@>=2.0.0 <3.0.0": "^2.1.4",
+      "braces@>=3.0.0 <4.0.0": "^3.0.3",
+      "cross-spawn@>=7.0.0 <8.0.0": "^7.0.5",
+      "diff@>=4.0.0 <5.0.0": "^4.0.4",
+      "flatted@>=3.0.0 <4.0.0": "^3.4.2",
+      "glob@>=10.0.0 <11.0.0": "^10.5.0",
+      "js-yaml@>=3.0.0 <4.0.0": "^3.15.1",
+      "js-yaml@>=4.0.0 <5.0.0": "^4.3.1",
+      "minimatch@>=3.0.0 <4.0.0": "^3.1.4",
+      "minimatch@>=9.0.0 <10.0.0": "^9.0.7",
+      "picomatch@>=2.0.0 <3.0.0": "^2.3.2",
+      "serialize-javascript@>=6.0.0 <7.0.0": "^6.0.2",
+      "serialize-javascript@>=7.0.0 <8.0.0": "^7.0.5",
+      "webpack@>=5.0.0 <6.0.0": "^5.104.1"
+    }
   }
 }
