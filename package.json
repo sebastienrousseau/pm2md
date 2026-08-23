@@ -3,9 +3,11 @@
   "version": "0.0.2",
   "description": "Generates a markdown documentation from a Postman collection file.",
   "homepage": "https://pm2md.com",
-  "keywords": ["pm2md"],
+  "keywords": [
+    "pm2md"
+  ],
   "author": "Sebastien Rousseau <sebastienrousseau@users.noreply.github.com>",
-  "license": "MIT",
+  "license": "Apache-2.0 OR MIT",
   "license_URI": "http://www.opensource.org/licenses/mit-license.php",
   "repository": {
     "type": "git",
@@ -95,7 +97,9 @@
     "src": "src",
     "test": "__tests__"
   },
-  "files": ["dist/**/*"],
+  "files": [
+    "dist/**/*"
+  ],
   "main": "./dist/index.js",
   "typings": "dist/index.d.ts",
   "type": "commonjs",
@@ -108,7 +112,9 @@
     "fileMap": [
       {
         "basePath": "dist",
-        "files": ["**/*"]
+        "files": [
+          "**/*"
+        ]
       }
     ],
     "source": "git",
