@@ -21,11 +21,11 @@ export function readAuthorization(data: types.jsonAuth) {
     markdown += `### 🔑 Authentication ${data.type}\n`;
 
     // Add newline for spacing
-    markdown += `\n`;
+    markdown += "\n";
 
     // Add Markdown table header
-    markdown += `|Param|Value|Type|\n`;
-    markdown += `|---|---|---|\n`;
+    markdown += "|Param|Value|Type|\n";
+    markdown += "|---|---|---|\n";
 
     // Loop through bearer tokens
     if (data.bearer) {
@@ -36,8 +36,8 @@ export function readAuthorization(data: types.jsonAuth) {
     }
 
     // Add newline for spacing
-    markdown += `\n`;
-    markdown += `\n`;
+    markdown += "\n";
+    markdown += "\n";
   }
 
   return markdown; // Return compiled markdown
@@ -53,23 +53,23 @@ export function readRequestOptions(request: types.jsonRequest): string {
   let markdown = "";
 
   // Check if request exists
-  if (request) {
+  if (request && request.header) {
     // Loop through headers
     request.header.map((header) => {
       // Add Markdown header section
-      markdown += `### Headers\n`;
+      markdown += "### Headers\n";
 
       // Add newline for spacing
-      markdown += `\n`;
+      markdown += "\n";
 
       // Add Markdown table rows for each header
-      markdown += `|Content-Type|Value|\n`;
-      markdown += `|---|---|\n`;
+      markdown += "|Content-Type|Value|\n";
+      markdown += "|---|---|\n";
       markdown += `|${header.key}|${header.value}|\n`;
 
       // Add newline for spacing
-      markdown += `\n`;
-      markdown += `\n`;
+      markdown += "\n";
+      markdown += "\n";
     });
   }
 
@@ -83,14 +83,14 @@ export function readQueryParams(url: types.jsonQuery) {
   // Check if query params exist
   if (url?.query) {
     // Add Markdown header section
-    markdown += `### Query Params\n`;
+    markdown += "### Query Params\n";
 
     // Add newline for spacing
-    markdown += `\n`;
+    markdown += "\n";
 
     // Add Markdown table header
-    markdown += `|Param|value|\n`;
-    markdown += `|---|---|\n`;
+    markdown += "|Param|value|\n";
+    markdown += "|---|---|\n";
 
     url.query.map((query) => {
       // Add Markdown table row for each query param
@@ -98,8 +98,8 @@ export function readQueryParams(url: types.jsonQuery) {
     });
 
     // Add newline for spacing
-    markdown += `\n`;
-    markdown += `\n`;
+    markdown += "\n";
+    markdown += "\n";
   }
 
   return markdown; // Return compiled markdown
@@ -116,23 +116,23 @@ export function readFormDataBody(body: types.jsonBody) {
     if (body.mode === "raw") {
       // Add Markdown header for raw body
       markdown += `### Body (**${body.mode}**)\n`;
-      markdown += `\n`;
+      markdown += "\n";
 
       // Add code block with raw body
-      markdown += `\`\`\`json\n`;
+      markdown += "```json\n";
       markdown += `${body.raw}\n`;
-      markdown += `\`\`\`\n`;
-      markdown += `\n`;
+      markdown += "```\n";
+      markdown += "\n";
     }
 
-    if (body.mode === "formdata") {
+    if (body.mode === "formdata" && body.formdata) {
       // Add Markdown header for form data
       markdown += `### Body ${body.mode}\n`;
-      markdown += `\n`;
+      markdown += "\n";
 
       // Add Markdown table header
-      markdown += `|Param|value|Type|\n`;
-      markdown += `|---|---|---|\n`;
+      markdown += "|Param|value|Type|\n";
+      markdown += "|---|---|---|\n";
 
       body.formdata.map((form) => {
         // Add Markdown table row for each form data field
@@ -141,8 +141,8 @@ export function readFormDataBody(body: types.jsonBody) {
         }|${form.type}|\n`;
       });
 
-      markdown += `\n`;
-      markdown += `\n`;
+      markdown += "\n";
+      markdown += "\n";
     }
   }
 
@@ -164,11 +164,11 @@ export function readResponse(responses: jsonResponse[]) {
     markdown += `### Response: ${response.code}\n`;
 
     // Add code block with response body
-    markdown += `\`\`\`json\n`;
+    markdown += "```json\n";
     markdown += `${response.body}\n`;
-    markdown += `\`\`\`\n`;
+    markdown += "```\n";
 
-    markdown += `\n`; // Add newline for spacing
+    markdown += "\n"; // Add newline for spacing
   }
 
   return markdown; // Return compiled markdown
@@ -182,7 +182,7 @@ export function readMethods(method: types.jsonReadMethods): string {
   // Initialize empty markdown string
   let markdown = "";
 
-  markdown += `\n`; // Add newline for spacing
+  markdown += "\n"; // Add newline for spacing
 
   // Add Markdown header with endpoint name
   markdown += `## End-point: ${method.name}\n`;
@@ -192,30 +192,38 @@ export function readMethods(method: types.jsonReadMethods): string {
     markdown += `${method.request.description}\n`;
   }
 
-  // Add Markdown header for method
-  markdown += `### Method: ${method.request.method}\n`;
+  if (method?.request) {
+    // Add Markdown header for method
+    if (method.request.method) {
+      markdown += `### Method: ${method.request.method}\n`;
+    }
 
-  // Add code block with endpoint URL
-  markdown += `>\`\`\`\n`;
-  markdown += `>${method.request.url.raw}\n`;
-  markdown += `>\`\`\`\n`;
+    // Add code block with endpoint URL
+    if (method.request.url?.raw) {
+      markdown += ">```\n";
+      markdown += `>${method.request.url.raw}\n`;
+      markdown += ">```\n";
+    }
 
-  // Add markdown for request options
-  markdown += readRequestOptions(method.request);
+    // Add markdown for request options
+    markdown += readRequestOptions(method.request);
 
-  // Add markdown for request body
-  markdown += readFormDataBody(method.request.body);
+    // Add markdown for request body
+    markdown += readFormDataBody(method.request.body);
 
-  // Add markdown for query parameters
-  markdown += readQueryParams(method.request.url);
+    // Add markdown for query parameters
+    markdown += readQueryParams(method.request.url);
 
-  // Add markdown for authentication
-  markdown += readAuthorization(method.request.auth);
+    // Add markdown for authentication
+    markdown += readAuthorization(method.request.auth);
+  }
 
   // Add markdown for response
-  markdown += readResponse(method.response);
+  if (method?.response) {
+    markdown += readResponse(method.response);
+  }
 
-  markdown += `\n`; // Add newline for spacing
+  markdown += "\n"; // Add newline for spacing
 
   return markdown; // Return compiled markdown
 }

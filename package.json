@@ -1,6 +1,6 @@
 {
   "name": "@sebastienrousseau/pm2md",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Generates a markdown documentation from a Postman collection file.",
   "homepage": "https://pm2md.com",
   "keywords": [
@@ -13,7 +13,7 @@
     "type": "git",
     "url": "git+https://github.com/sebastienrousseau/pm2md.git"
   },
-  "bin": "./dist/pm2md.js",
+  "bin": "./dist/bin/pm2md.js",
   "bugs": {
     "url": "https://github.com/sebastienrousseau/pm2md/issues"
   },
@@ -28,31 +28,32 @@
     }
   ],
   "engines": {
-    "node": "^16.0.0 || >=18.0.0"
+    "node": ">=18.0.0"
   },
+  "packageManager": "pnpm@11.9.0",
   "git-checks": false,
   "preferGlobal": true,
   "scripts": {
-    "build:pm2md": "npx tsc --build tsconfig.json && pnpm run copy && pnpm run filesize:distribution",
+    "build:pm2md": "tsc --build tsconfig.json && pnpm run copy && pnpm run filesize:distribution",
     "build": "pnpm run build:pm2md && cat ./package.json | grep -v '\"private\":' > dist/package.json && pnpm pack ./dist",
-    "build:watch": "npx tsc -w",
-    "clean": "npx rimraf dist coverage node_modules",
-    "copy": "npx pnpm run copy:copyright && npm run copy:license && npm run copy:readme && npm run copy:package",
-    "copy:copyright": "npx pnpm cp COPYRIGHT dist/",
-    "copy:license": "npx pnpm cp LICENSE dist/",
-    "copy:package": "npx pnpm cp ./package.json ./dist/",
-    "copy:readme": "npx pnpm cp README.md dist/",
-    "docs": "npx typedoc --options typedoc.json ./src/**/**.ts",
-    "filesize:distribution": "npx filesizes dist/ > dist/report.txt",
-    "format": "npx prettier --write src/**/*.ts",
-    "lint": "npx eslint ./src/**/*.ts ./__tests__/**/*.ts",
-    "lint:fix": "npx eslint --fix ./src/**/*.ts ./__tests__/**/*.ts",
-    "markdown": "npx remark ./*.md ./**/*.md --rc-path ./.remarkrc --quiet",
+    "build:watch": "tsc -w",
+    "clean": "rimraf dist coverage node_modules",
+    "copy": "pnpm run copy:copyright && pnpm run copy:license && pnpm run copy:readme && pnpm run copy:package",
+    "copy:copyright": "cp COPYRIGHT dist/",
+    "copy:license": "cp LICENSE dist/",
+    "copy:package": "cp ./package.json ./dist/",
+    "copy:readme": "cp README.md dist/",
+    "docs": "typedoc --options typedoc.json ./src/**/**.ts",
+    "filesize:distribution": "filesizes dist/ > dist/report.txt",
+    "format": "prettier --write src/**/*.ts",
+    "lint": "eslint ./src/**/*.ts ./__tests__/**/*.ts",
+    "lint:fix": "eslint --fix ./src/**/*.ts ./__tests__/**/*.ts",
+    "markdown": "remark ./*.md ./**/*.md --rc-path ./.remarkrc --quiet",
     "release:prepare": "pnpm publish $(node -p \"p=require('./package.json');p.name+'-'+p.version+'.tgz'\")",
     "release:publish": "pnpm publish --access public --ignore-scripts --@OWNER:registry='https://registry.npmjs.org'",
     "release": "pnpm run build && pnpm run release:prepare && pnpm run release:publish",
     "start": "node ./dist/bin/pm2md.js",
-    "test": "npx pnpm jest --coverage --config jest.config.js"
+    "test": "jest --coverage --config jest.config.cjs"
   },
   "dependencies": {
     "filesizes": "^0.1.2",

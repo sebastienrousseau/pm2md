@@ -6,6 +6,9 @@ import path from "path";
 import fs from "fs";
 
 export function writeFile(content: string, jsonFilePath: string) {
+  if (!jsonFilePath) {
+    throw new TypeError("Cannot read properties of undefined (reading 'replaceAll')");
+  }
   try {
     // Get file name from path
     const fileName = path.basename(jsonFilePath);
