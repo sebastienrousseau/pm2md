@@ -23,9 +23,9 @@ export function createStructureOfMarkdown(data: types.jsonDocument): string {
 
   // Add description if present
   markdown +=
-    data.info.description !== undefined
-      ? `${data.info.description || ""}\n`
-      : ``;
+    data.info.description !== undefined ?
+      `${data.info.description || ""}\n` :
+      "";
 
   // Add generated items
   markdown += readItems(data.item);
