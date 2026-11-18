@@ -1,73 +1,112 @@
-// Copyright © 2022-2023 PM2MD. All rights reserved.
+// Copyright © 2022-2026 PM2MD. All rights reserved.
 // SPDX-License-Identifier: Apache-2.0
 // SPDX-License-Identifier: MIT
 
-export type jsonDocument = {
-  info: {
-    description?: string;
-    name: string;
-  };
-  item: any[];
-};
+export type PostmanDescription =
+  | string
+  | {
+      content?: string;
+      type?: string;
+    };
 
-export type jsonAuth = {
-  type: any;
-  bearer?: any[];
-};
-
-export type jsonRequest = {
-  header?: any[];
+export type PostmanKeyValue = {
   key?: string;
-  value?: string;
-  description?: string;
-};
-
-export type jsonReadMethods = {
-  name: any;
-  response: any;
-  request: {
-    description?: any;
-    method?: any;
-    url?: any;
-    body?: any;
-    auth?: any;
-    header?: any[];
-    key?: string;
-    value?: string;
-  };
-};
-
-export type jsonQuery = {
-  query?: any[];
-};
-
-export type jsonBody = {
-  key?: string;
-  value?: string;
+  value?: unknown;
   type?: string;
-  mode?: string;
-  raw?: any;
-  formdata?: any[];
+  description?: PostmanDescription;
+  disabled?: boolean;
 };
 
-export type jsonResponse = {
+export type PostmanAuth = {
+  type: string;
+  bearer?: PostmanKeyValue[];
+  apikey?: PostmanKeyValue[];
+  basic?: PostmanKeyValue[];
+  oauth2?: PostmanKeyValue[];
+  oauth1?: PostmanKeyValue[];
+  awsv4?: PostmanKeyValue[];
+  digest?: PostmanKeyValue[];
+  [key: string]: unknown;
+};
+
+export type PostmanUrl =
+  | string
+  | {
+      raw?: string;
+      host?: string | string[];
+      path?: string | string[];
+      query?: PostmanKeyValue[];
+      variable?: PostmanKeyValue[];
+    };
+
+export type PostmanBody = {
+  mode?: string;
+  raw?: string;
+  formdata?: PostmanKeyValue[];
+  urlencoded?: PostmanKeyValue[];
+  graphql?: {
+    query?: string;
+    variables?: string;
+  };
+  file?: {
+    src?: string;
+  };
+  options?: {
+    raw?: {
+      language?: string;
+    };
+  };
+};
+
+export type PostmanResponse = {
+  name?: string;
+  status?: string;
   code?: number | string;
   body?: string;
-  length?: number;
-  responses?: any[];
+  header?: PostmanKeyValue[];
 };
 
-export type jsonMethod = {
-  name: any;
-  request: {
-    description?: any;
-    method?: any;
-    url?: any;
-    body?: any;
-    auth?: any;
-    header?: any[];
-    key?: string;
-    value?: string;
-  };
-  response: string | any[];
+export type PostmanRequest = {
+  description?: PostmanDescription;
+  method?: string;
+  url?: PostmanUrl;
+  body?: PostmanBody;
+  auth?: PostmanAuth;
+  header?: PostmanKeyValue[];
 };
+
+export type PostmanItem = {
+  name: string;
+  description?: PostmanDescription;
+  item?: PostmanItem[];
+  request?: PostmanRequest;
+  response?: PostmanResponse[];
+};
+
+export type PostmanCollection = {
+  info: {
+    name: string;
+    description?: PostmanDescription;
+    schema?: string;
+    version?: string;
+  };
+  item: PostmanItem[];
+  auth?: PostmanAuth;
+};
+
+// Backwards-compatible type aliases
+export type jsonDocument = PostmanCollection;
+export type jsonAuth = PostmanAuth;
+export type jsonRequest = {
+  header?: PostmanKeyValue[];
+  key?: string;
+  value?: string;
+  description?: PostmanDescription;
+};
+export type jsonReadMethods = PostmanItem;
+export type jsonQuery = {
+  query?: PostmanKeyValue[];
+};
+export type jsonBody = PostmanBody;
+export type jsonResponse = PostmanResponse;
+export type jsonMethod = PostmanItem;

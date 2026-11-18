@@ -1,38 +1,44 @@
-// Copyright © 2022-2023 PM2MD. All rights reserved.
+// Copyright © 2022-2026 PM2MD. All rights reserved.
 // SPDX-License-Identifier: Apache-2.0
 // SPDX-License-Identifier: MIT
 
-// Import types for type checking
 import * as types from "../typings/types";
-
-// Import readItems utility function
-import { readItems } from "./read";
+import {
+  extractDescription,
+  readAuthorization,
+  readItems,
+} from "./read";
 
 /**
- * Create structure of the markdown documentation
- * @param {object} data - json of the document to be converted
- * @type {string} jsonDocument - structure of the markdown documentation
- * @return {string} markdown - markdown structure of the documentation
+ * Create structure of the markdown documentation.
+ * @param {object} data - Parsed Postman collection object
+ * @returns {string} Compiled markdown documentation
  */
-export function createStructureOfMarkdown(data: types.jsonDocument): string {
-  // Initialize markdown string
-  let markdown = "";
+export function createStructureOfMarkdown(
+  data: types.PostmanCollection
+): string {
+  if (!data || typeof data !== "object" || !data.info || !data.info.name) {
+    throw new Error(
+      "Invalid Postman collection: missing required 'info.name' field."
+    );
+  }
 
-  // Add title from data
-  markdown += `# Project: ${data.info.name}\n`;
+  const chunks: string[] = [`# Project: ${data.info.name}\n`];
 
-  // Add description if present
-  markdown +=
-    data.info.description !== undefined ?
-      `${data.info.description || ""}\n` :
-      "";
+  const description = extractDescription(data.info.description);
+  if (description) {
+    chunks.push(`${description}\n`);
+  }
 
-  // Add generated items
-  markdown += readItems(data.item);
+  if (data.auth) {
+    chunks.push(readAuthorization(data.auth));
+  }
 
-  // Return compiled markdown
-  return markdown;
+  if (Array.isArray(data.item)) {
+    chunks.push(readItems(data.item));
+  }
+
+  return chunks.join("");
 }
 
-// Export function
 export default { createStructureOfMarkdown };

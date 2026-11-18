@@ -1,87 +1,94 @@
+/* eslint-disable import/no-unresolved */
 import fs from "fs";
-import minimist from "minimist";
-import { init } from "../src/index";
-import { createStructureOfMarkdown } from "../src/util/index";
+import os from "os";
+import path from "path";
+import { convertPostmanToMarkdown, init } from "../src/index";
 
-describe("Index Test initialization", () => {
-  test("Check init function", () => {
-    expect(init).toBeDefined();
-    expect(init).toBeInstanceOf(Function);
+describe("convertPostmanToMarkdown", () => {
+  test("converts Twitter_API_v2.postman_collection.json cleanly", () => {
+    const raw = fs.readFileSync(
+      path.resolve(__dirname, "Twitter_API_v2.postman_collection.json"),
+      "utf8"
+    );
+    const json = JSON.parse(raw);
+    const md = convertPostmanToMarkdown(json);
+
+    expect(md).toContain("# Project: Twitter API v2");
+    expect(md).toContain("## End-point:");
+    expect(md).toContain("Powered by: [pm2md](https://pm2md.com)");
+  });
+
+  test("supports omitting the footer", () => {
+    const md = convertPostmanToMarkdown(
+      { info: { name: "No Footer" }, item: [] },
+      { footer: false }
+    );
+    expect(md).toBe("# Project: No Footer\n");
   });
 });
 
-describe("Index Test initialization", () => {
-  test("Check init function", () => {
-    const args = minimist(process.argv.slice(2));
-    init();
-    expect(args).toBeDefined();
-    expect(args).toBeInstanceOf(Object);
+describe("CLI init()", () => {
+  let tmpDir: string;
+  let originalExitCode: typeof process.exitCode;
+
+  beforeEach(() => {
+    tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "pm2md-cli-test-"));
+    originalExitCode = process.exitCode;
+    process.exitCode = undefined;
   });
-  test("Check init function", () => {
-    const chalk = require("chalk");
-    init();
-    expect(chalk).toBeDefined();
+
+  afterEach(() => {
+    process.exitCode = originalExitCode;
+    fs.rmSync(tmpDir, { recursive: true, force: true });
+    jest.restoreAllMocks();
   });
-  test("Check init function", () => {
-    const path = "hello.json";
-    init();
-    expect(path).toBeDefined();
+
+  test("sets exitCode = 1 when no file argument is provided", () => {
+    const errorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
+    init([]);
+    expect(process.exitCode).toBe(1);
+    expect(errorSpy).toHaveBeenCalled();
+  });
+
+  test("sets exitCode = 1 for invalid JSON file", () => {
+    const badFile = path.join(tmpDir, "bad.json");
+    fs.writeFileSync(badFile, "{not-json", "utf8");
+    const errorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
+    jest.spyOn(console, "log").mockImplementation(() => {});
+
+    init([badFile, "--quiet"]);
+    expect(process.exitCode).toBe(1);
+    expect(errorSpy).toHaveBeenCalled();
+  });
+
+  test("writes output to --output path when provided", () => {
+    const inputFile = path.join(tmpDir, "api.json");
+    const outputFile = path.join(tmpDir, "out", "custom.md");
+    fs.writeFileSync(
+      inputFile,
+      JSON.stringify({ info: { name: "Demo" }, item: [] }),
+      "utf8"
+    );
+
+    init([inputFile, "--output", outputFile, "--quiet"]);
+    expect(process.exitCode).toBeUndefined();
+    expect(fs.existsSync(outputFile)).toBe(true);
+    expect(fs.readFileSync(outputFile, "utf8")).toContain("# Project: Demo");
+  });
+
+  test("prints markdown to stdout when --stdout is passed", () => {
+    const inputFile = path.join(tmpDir, "api.json");
+    fs.writeFileSync(
+      inputFile,
+      JSON.stringify({ info: { name: "Stdout Demo" }, item: [] }),
+      "utf8"
+    );
+    const stdoutSpy = jest
+      .spyOn(process.stdout, "write")
+      .mockImplementation(() => true);
+
+    init([inputFile, "--stdout", "--no-footer"]);
+    expect(process.exitCode).toBeUndefined();
+    expect(stdoutSpy).toHaveBeenCalledWith("# Project: Stdout Demo\n");
   });
 });
-
-it("should pushed arguments to init function", () => {
-  process.argv.push("./__tests__/hello.json");
-  process.argv.push("hello");
-  let args = minimist(process.argv.slice(2));
-  const path = args["_"];
-  init();
-  expect(path).toContain("hello");
-  expect(path).toContain("./__tests__/hello.json");
-  if (fs.existsSync(path[0])) {
-    let rawData = fs.readFileSync(path[0]);
-    const json = JSON.parse(rawData.toString());
-    console.log(json);
-    expect(json).toHaveProperty("hello");
-  }
-});
-
-it("should check markdown content", () => {
-
-  let markdown = createStructureOfMarkdown(
-    {
-      info: {
-        description: "description",
-        name: "name",
-      },
-      item: ["item"],
-    }
-  );
-  expect(markdown).toContain("Project:");
-
-});
-
-it("compiling android goes as expected", async() => {
-  process.argv.push("./__tests__/hello.json");
-  process.argv.push("hello");
-  init();
-
-  // const data = init();
-  // expect(init).toBe();
-
-  // expect(init()).toThrowError();
-
-  // expect(() => init()).toThrow();
-  // expect(() => init()).toThrow(Error);
-
-  // You can also use the exact error message or a regexp
-  // expect(() => init()).toThrow("you are using the wrong JDK");
-  // expect(() => init()).toThrow(/JDK/);
-});
-
-it("should return if markdown is defined", () => {
-  init(); expect(createStructureOfMarkdown).toBeDefined();
-});
-
-//# sourceMappingURL=index.spec.js.map
-// Language: typescript
-// Path: __tests__/index.spec.ts

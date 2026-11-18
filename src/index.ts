@@ -1,94 +1,164 @@
-// Copyright © 2022-2023 PM2MD. All rights reserved.
+// Copyright © 2022-2026 PM2MD. All rights reserved.
 // SPDX-License-Identifier: Apache-2.0
 // SPDX-License-Identifier: MIT
 
-// Import utility functions from local modules
-import { createStructureOfMarkdown } from "./util/create";
-import { writeFile } from "./util/write"
-
-// Import core Node.js filesystem and path modules
 import fs from "fs";
 import path from "path";
+import { parseArgs } from "node:util";
 
-// Import minimist to parse command line arguments
-import minimist from "minimist";
+import * as types from "./typings/types";
+import { createStructureOfMarkdown } from "./util/create";
+import { resolveOutputPath, writeFile } from "./util/write";
 
-/**
- * Initialize execution.
- */
-export function init() {
-    // Print banner
-    console.log(`
-PM2MD
-
-https://pm2md.com/
-
-`);
-
-    /**
-    * Parse command line arguments.
-    * @type {Object}
-    */
-    const args = minimist(process.argv.slice(2));
-
-    // Get first argument as the path
-    const paths = args._;
-
-    /**
-    * Check if a path was passed.
-    * @type {boolean}
-    */
-    const isPathPassed = paths.length > 0;
-
-    // Check if a path was passed
-    if (isPathPassed) {
-        /**
-        * The path to the JSON file.
-        * @type {string}
-        */
-        const jsonFilePath = paths[0];
-
-        // Check if file exists at path
-        if (fs.existsSync(jsonFilePath)) {
-            // Print message that markdown is being generated
-            console.log(`❯ Reading file ${jsonFilePath}\n`);
-            console.log("❯ Generating markdown file ...\n");
-
-            try {
-                /**
-                * The raw data read from the file.
-                * @type {Buffer}
-                */
-                let rawData = fs.readFileSync(jsonFilePath);
-
-                // Parse JSON
-                const json = JSON.parse(rawData.toString());
-
-                // Generate markdown from JSON
-                let markdown = createStructureOfMarkdown(json);
-
-                // Add footer
-                markdown += "____________________________\n";
-                markdown += "Powered by: [pm2md](https://pm2md.com)\n";
-
-                // Get filename without extension from path
-                const fileNameWithoutExt = path.parse(jsonFilePath).name;
-
-                // Write markdown file
-                writeFile(markdown, fileNameWithoutExt);
-            } catch (error) {
-                console.error("❯ Error reading or parsing the JSON file:", error);
-            }
-        } else {
-            // Print error if invalid path
-            console.error("❯ Path is not valid or the file does not exist.");
-        }
-    } else {
-        // Print error if no path
-        console.error("❯ Usage: node ./dist/bin/pm2md.js [path_to_json_file]\n");
-        console.error("❯ Path of JSON file is required.\n");
-    }
+export interface ConvertOptions {
+  footer?: boolean;
 }
 
-// Export init function
-export default { init };
+const FOOTER =
+  "____________________________\nPowered by: [pm2md](https://pm2md.com)\n";
+
+function readPackageVersion(): string {
+  try {
+    const pkgPath = path.resolve(__dirname, "..", "package.json");
+    const fallbackPath = path.resolve(__dirname, "..", "..", "package.json");
+    const target = fs.existsSync(pkgPath) ? pkgPath : fallbackPath;
+    if (fs.existsSync(target)) {
+      const pkg = JSON.parse(fs.readFileSync(target, "utf8")) as {
+        version?: string;
+      };
+      if (pkg.version) {
+        return pkg.version;
+      }
+    }
+  } catch {
+    // Ignore version lookup failures
+  }
+  return "0.0.4";
+}
+
+function printHelp(): void {
+  console.log(`PM2MD - Postman Collection to Markdown generator
+
+Usage:
+  pm2md <collection.json> [options]
+
+Options:
+  -o, --output <path>   Write Markdown to a specific file path
+      --stdout          Print generated Markdown to stdout instead of a file
+      --no-footer       Omit the attribution footer
+  -q, --quiet           Suppress progress output
+  -v, --version         Print version and exit
+  -h, --help            Show this help message and exit
+`);
+}
+
+/**
+ * Convert a parsed Postman collection object into Markdown.
+ */
+export function convertPostmanToMarkdown(
+  collection: types.PostmanCollection,
+  options: ConvertOptions = {}
+): string {
+  let markdown = createStructureOfMarkdown(collection);
+  if (options.footer !== false) {
+    markdown += FOOTER;
+  }
+  return markdown;
+}
+
+/**
+ * Initialize and execute the PM2MD CLI.
+ */
+export function init(argv: string[] = process.argv.slice(2)): void {
+  let parsed;
+  try {
+    parsed = parseArgs({
+      args: argv,
+      allowPositionals: true,
+      options: {
+        output: { type: "string", short: "o" },
+        stdout: { type: "boolean", default: false },
+        "no-footer": { type: "boolean", default: false },
+        quiet: { type: "boolean", short: "q", default: false },
+        version: { type: "boolean", short: "v", default: false },
+        help: { type: "boolean", short: "h", default: false },
+      },
+    });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    console.error(`❯ Invalid arguments: ${message}`);
+    process.exitCode = 1;
+    return;
+  }
+
+  const { values, positionals } = parsed;
+
+  if (values.help) {
+    printHelp();
+    return;
+  }
+
+  if (values.version) {
+    console.log(readPackageVersion());
+    return;
+  }
+
+  if (positionals.length === 0) {
+    console.error("❯ Usage: pm2md <path_to_json_file> [options]");
+    console.error("❯ Path of JSON file is required. Run `pm2md --help` for options.");
+    process.exitCode = 1;
+    return;
+  }
+
+  const jsonFilePath = positionals[0];
+  if (!fs.existsSync(jsonFilePath) || !fs.statSync(jsonFilePath).isFile()) {
+    console.error(
+      `❯ Path is not valid or is not a file: ${jsonFilePath}`
+    );
+    process.exitCode = 1;
+    return;
+  }
+
+  const quiet = Boolean(values.quiet) || Boolean(values.stdout);
+  if (!quiet) {
+    console.log(`\nPM2MD\nhttps://pm2md.com/\n`);
+    console.log(`❯ Reading file ${jsonFilePath}`);
+    console.log("❯ Generating markdown file ...");
+  }
+
+  try {
+    const rawData = fs.readFileSync(jsonFilePath, "utf8");
+    const json = JSON.parse(rawData) as types.PostmanCollection;
+    const markdown = convertPostmanToMarkdown(json, {
+      footer: !values["no-footer"],
+    });
+
+    if (values.stdout) {
+      process.stdout.on("error", (err: NodeJS.ErrnoException) => {
+        if (err.code === "EPIPE") {
+          process.exit(0);
+        }
+        throw err;
+      });
+      process.stdout.write(markdown);
+      return;
+    }
+
+    const targetPath = values.output
+      ? values.output
+      : resolveOutputPath(jsonFilePath);
+    const writtenPath = writeFile(markdown, targetPath);
+
+    if (!quiet) {
+      console.log(`❯ Wrote to ${writtenPath}`);
+    }
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    console.error(`❯ Error processing ${jsonFilePath}: ${message}`);
+    process.exitCode = 1;
+  }
+}
+
+export * from "./typings/types";
+export * from "./util/index";
+export default { init, convertPostmanToMarkdown };

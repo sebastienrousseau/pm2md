@@ -1,114 +1,51 @@
 /* eslint-disable import/no-unresolved */
 import fs from "fs";
-import { writeFile, writeDirectory } from "../../src/util/write";
+import os from "os";
+import path from "path";
+import {
+  resolveOutputPath,
+  writeDirectory,
+  writeFile,
+} from "../../src/util/write";
 
-describe("Test `writeFile`", () => {
-  it("should check writeFile function", () => {
-    expect(writeFile).toBeDefined();
-    expect(writeFile).toBeInstanceOf(Function);
-    expect(writeFile).toBeTruthy();
+describe("resolveOutputPath", () => {
+  test("replaces non-.md extension with .md in the same directory", () => {
+    expect(resolveOutputPath("examples/api.postman_collection.json")).toBe(
+      path.join("examples", "api.postman_collection.md")
+    );
+    expect(resolveOutputPath("docs/out.md")).toBe(path.join("docs", "out.md"));
   });
 });
 
-describe("Test `writeDirectory`", () => {
-  it("should check writeDirectory function", () => {
-    expect(writeDirectory).toBeDefined();
-    expect(writeDirectory).toBeInstanceOf(Function);
-    expect(writeDirectory).toBeTruthy();
+describe("writeFile and writeDirectory", () => {
+  let tmpDir: string;
+
+  beforeEach(() => {
+    tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "pm2md-write-test-"));
+  });
+
+  afterEach(() => {
+    fs.rmSync(tmpDir, { recursive: true, force: true });
+  });
+
+  test("writes markdown to the resolved target path and creates missing directories", () => {
+    const target = path.join(tmpDir, "nested", "collection.json");
+    const written = writeFile("# Hello\n", target);
+
+    expect(written).toBe(path.join(tmpDir, "nested", "collection.md"));
+    expect(fs.existsSync(written)).toBe(true);
+    expect(fs.readFileSync(written, "utf8")).toBe("# Hello\n");
+  });
+
+  test("throws a descriptive TypeError when targetPath is empty", () => {
+    expect(() => writeFile("content", "")).toThrow(
+      "Output file path must be a non-empty string."
+    );
+  });
+
+  test("writeDirectory creates nested directories", () => {
+    const dirpath = path.join(tmpDir, "a", "b");
+    writeDirectory(dirpath);
+    expect(fs.existsSync(dirpath)).toBe(true);
   });
 });
-
-describe("Test `writeFile`", () => {
-  it("should check writeFile content", () => {
-    const data = {
-      content: "./examples/Twitter_API_v2.postman_collection.json",
-      fileName: "./examples/Twitter_API_v2",
-    };
-    expect(data.content).toStrictEqual("./examples/Twitter_API_v2.postman_collection.json");
-    expect(data.fileName).toStrictEqual("./examples/Twitter_API_v2");
-  });
-});
-
-describe("Test `writeFile`", () => {
-  it("should check folder", () => {
-    const fileName = "./__tests__/hello";
-    const folder = fileName.replace(/\/[^\/]+\/?$/, "");
-    expect(folder).toStrictEqual("./__tests__");
-  });
-});
-
-describe("Test `writeFile`", () => {
-  it("should check fileName", () => {
-    let fileName = "hello";
-    fileName = fileName + ".md";
-    expect(fileName).toStrictEqual("hello.md");
-  });
-});
-
-describe("Test `writeFile`", () => {
-  it("should write a file", async() => {
-    const content = "hello";
-    const fileName = "./__tests__/hello.json";
-    const result = async() => {
-      writeFile(content, fileName);
-    };
-    Promise.resolve(result).then(() => {
-      expect(fs.existsSync(fileName)).toBeTruthy();
-    });
-  });
-});
-
-describe("Test `writeFile`", () => {
-  it("should write a file", async() => {
-    const content = "hello";
-    const fileName = "./__tests__/hello.json";
-    const result = async() => {
-      writeFile(content, fileName);
-    };
-    await result();
-    Promise.resolve(result).then(() => {
-      expect(result).toBeInstanceOf(Function);
-    });
-  });
-});
-
-describe("Test `writeFile`", () => {
-  it("should write a file", async() => {
-    const content = "hello";
-    const fileName = "./__tests__/hello.json";
-    const result = async() => {
-      writeFile(content, fileName);
-    };
-    await result();
-    Promise.resolve(result).then(() => {
-      // expect(result).toThrowError('File not found');
-    });
-  });
-});
-
-it("should throw an error when no properties are specified", async() => {
-  expect(writeFile).toThrowError("Cannot read properties of undefined (reading 'replaceAll')");
-});
-
-describe("Test 'writeDirectory'", () => {
-  it("should write a directory", async() => {
-    const dirpath = "./__tests__/hello";
-    const result = async() => {
-      writeDirectory(dirpath);
-    };
-    await result();
-    Promise.resolve(result).then(() => {
-      expect(fs.existsSync(dirpath)).toBeTruthy();
-    });
-  });
-});
-//   const data = {
-//     content: "./examples/Twitter_API_v2.postman_collection.json",
-//     fileName: "./examples/Twitter_API_v2",
-//   }
-//   test("Check 'writeFile' function", async () => {
-//       async () => await writeFile(data.content, data.fileName);
-//       expect(data.content || data.fileName).toBeDefined();
-//   });
-// });
-

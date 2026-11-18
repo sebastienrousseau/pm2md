@@ -1,49 +1,47 @@
-// Copyright © 2022-2023 PM2MD. All rights reserved.
+// Copyright © 2022-2026 PM2MD. All rights reserved.
 // SPDX-License-Identifier: Apache-2.0
 // SPDX-License-Identifier: MIT
 
-import path from "path";
 import fs from "fs";
+import path from "path";
 
-export function writeFile(content: string, jsonFilePath: string) {
-  if (!jsonFilePath) {
-    throw new TypeError("Cannot read properties of undefined (reading 'replaceAll')");
-  }
-  try {
-    // Get file name from path
-    const fileName = path.basename(jsonFilePath);
-
-    // Check if fileName is empty
-    if (!fileName) {
-      console.error("❯ File name is empty!\n");
-      return;
-    }
-    console.log(`❯ File name: ${fileName}\n`);
-
-    // Append .md extension
-    const mdFileName = `${path.parse(fileName).name}.md`;
-
-    // Folder to write to
-    const outDir = "./dist";
-
-    // Construct full file path
-    const filePath = path.join(outDir, mdFileName);
-
-    // Make sure folder exists
-    if (!fs.existsSync(outDir)) {
-      fs.mkdirSync(outDir, { recursive: true });
-    }
-
-    // Write Markdown file
-    fs.writeFileSync(filePath, content);
-
-    console.log(`❯ Wrote to ${filePath}\n`);
-  } catch (error) {
-    console.error("❯ An error occurred:", error);
-  }
+/**
+ * Resolve the output Markdown file path from a target path.
+ * Preserves the target directory and replaces any non-.md extension with .md.
+ */
+export function resolveOutputPath(targetPath: string): string {
+  const parsed = path.parse(targetPath);
+  const fileName = parsed.ext === ".md" ? parsed.base : `${parsed.name}.md`;
+  return parsed.dir ? path.join(parsed.dir, fileName) : fileName;
 }
 
-export function writeDirectory(dirpath: fs.PathLike) {
+/**
+ * Write generated Markdown content to disk.
+ * @param {string} content - Markdown content to write
+ * @param {string} targetPath - Destination file path (or base path)
+ * @returns {string} The resolved path written
+ */
+export function writeFile(content: string, targetPath: string): string {
+  if (!targetPath || typeof targetPath !== "string" || !targetPath.trim()) {
+    throw new TypeError("Output file path must be a non-empty string.");
+  }
+
+  const resolvedPath = resolveOutputPath(targetPath.trim());
+  const outDir = path.dirname(resolvedPath);
+
+  if (outDir && outDir !== ".") {
+    writeDirectory(outDir);
+  }
+
+  fs.writeFileSync(resolvedPath, content, "utf8");
+  return resolvedPath;
+}
+
+/**
+ * Ensure a directory exists, creating parent directories recursively if needed.
+ * @param {fs.PathLike} dirpath - Directory path to create
+ */
+export function writeDirectory(dirpath: fs.PathLike): void {
   if (!fs.existsSync(dirpath)) {
     fs.mkdirSync(dirpath, { recursive: true });
   }

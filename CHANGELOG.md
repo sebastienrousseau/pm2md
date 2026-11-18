@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.4] - 2026-11-18
+
+### Added
+
+- Added pure programmatic `convertPostmanToMarkdown` API in `src/index.ts`.
+- Added CLI flags (`--output`, `--stdout`, `--no-footer`, `--quiet`, `--version`, `--help`) using built-in `node:util` `parseArgs`.
+- Added support for `urlencoded`, `graphql`, and `file` request bodies, path variables (`url.variable`), all Postman auth types, and multiple response examples.
+- Added Markdown table-cell escaping (`escapeTableCell`), dynamic code-fence sizing (`formatCodeBlock`), and folder heading depth clamping.
+
+### Changed
+
+- Eliminated all runtime `dependencies` by replacing `minimist` with `node:util` `parseArgs` and moving build/dev tools to `devDependencies`.
+- Fixed `readRequestOptions` to emit a single `### Headers` table instead of repeating headings per header.
+- Fixed `writeFile` to write relative to the target/input path instead of hardcoding `./dist`, and set non-zero exit codes on CLI errors.
+- Updated `@types/node` to `^22.0.0` and aligned `README.md` documentation and license references.
+
 ## [0.0.3] - 2026-10-13
 
 ### Added
