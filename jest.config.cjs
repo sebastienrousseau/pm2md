@@ -7,7 +7,7 @@ module.exports = {
       "<rootDir>/packages/pm2md-core/src/index.ts",
   },
   transform: {
-    "^.+\\.ts?$": "ts-jest",
+    "^.+\\.ts?$": ["ts-jest", { tsconfig: "tsconfig.eslint.json" }],
   },
   setupFiles: ["ts-node/register"],
 };
