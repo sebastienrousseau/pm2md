@@ -11,7 +11,8 @@
   "settings": {
     "import/resolver": {
       "typescript": {
-        "alwaysTryTypes": true
+        "alwaysTryTypes": true,
+        "project": "./tsconfig.eslint.json"
       },
       "node": {
         "extensions": [".js", ".jsx", ".ts", ".tsx", ".json"]
