@@ -129,7 +129,11 @@ importers:
         specifier: workspace:*
         version: link:../pm2md-core
 
-  packages/pm2md-core: {}
+  packages/pm2md-core:
+    dependencies:
+      yaml:
+        specifier: ^2.7.0
+        version: 2.9.0
 
 packages:
 
@@ -3517,6 +3521,7 @@ packages:
   yaml@2.9.0:
     resolution: {integrity: sha512-2AvhNX3mb8zd6Zy7INTtSpl1F15HW6Wnqj0srWlkKLcpYl/gMIMJiyuGq2KeI2YFxUPjdlB+3Lc10seMLtL4cA==}
     engines: {node: '>= 14.6'}
+    hasBin: true
 
   yargs-parser@21.1.1:
     resolution: {integrity: sha512-tVpsJW7DdjecAiFpbIB1e3qxIQsE6NoPc5/eTdrbbIC4h0LVsWhnoa3g+m2HclBIujHzsxZ4VJVA+GUuc2/LBw==}

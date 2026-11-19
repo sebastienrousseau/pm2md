@@ -1,6 +1,6 @@
 {
   "name": "@sebastienrousseau/pm2md-core",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Core API specification parser, canonical IR, secret redactor, and Markdown renderer for PM2MD.",
   "homepage": "https://pm2md.com",
   "keywords": [
@@ -35,7 +35,9 @@
     "clean": "rimraf dist",
     "lint": "eslint ./src/**/*.ts ./__tests__/**/*.ts"
   },
-  "dependencies": {},
+  "dependencies": {
+    "yaml": "^2.7.0"
+  },
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org"

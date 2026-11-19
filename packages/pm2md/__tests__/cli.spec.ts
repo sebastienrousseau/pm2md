@@ -64,6 +64,26 @@ describe("pm2md CLI & file writer", () => {
     expect(captured).not.toContain("Powered by:");
   });
 
+  test("CLI converts OpenAPI YAML with --llms-txt and --format", () => {
+    const yamlFile = path.join(tmpDir, "openapi.yaml");
+    fs.writeFileSync(
+      yamlFile,
+      "openapi: 3.0.3\ninfo:\n  title: YAML API\n  version: 1.0.0\npaths:\n  /ping:\n    get:\n      summary: Ping\n      responses:\n        '200':\n          description: OK\n",
+      "utf8"
+    );
+
+    let captured = "";
+    jest.spyOn(process.stdout, "write").mockImplementation((chunk) => {
+      captured += String(chunk);
+      return true;
+    });
+
+    init([yamlFile, "--format", "openapi", "--llms-txt", "--stdout"]);
+    expect(process.exitCode).toBeUndefined();
+    expect(captured).toContain("# YAML API");
+    expect(captured).toContain("- `GET /ping` (General): Ping");
+  });
+
   test("CLI sets exitCode = 1 on missing file", () => {
     const errSpy = jest.spyOn(console, "error").mockImplementation(() => {});
     init([path.join(tmpDir, "missing.json")]);

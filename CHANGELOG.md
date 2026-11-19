@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.6] - 2026-11-19
+
+### Added
+
+- Added Swagger 2.0 and OpenAPI 3.0/3.1 parsers (`parseOpenApiToIR`) with YAML support (`yaml`), cycle-safe `$ref` resolution (`dereferenceObject`), and automatic schema example synthesis.
+- Added format auto-detection (`detectSpecFormat`, `parseToIR`, `convertSpecToMarkdown`) and `--format <auto|postman|swagger|openapi>` CLI flag.
+- Added `llms.txt` and `llms-full.txt` renderers (`renderLlmsTxt`, `renderLlmsFullTxt`, `convertSpecToLlmsTxt`) and `--llms-txt` / `--llms-full` CLI flags.
+
 ## [0.0.5] - 2026-11-18
 
 ### Added
