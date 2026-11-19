@@ -33,7 +33,7 @@ function readPackageVersion(): string {
   } catch {
     // Ignore version lookup failures
   }
-  return "0.0.6";
+  return "0.0.4";
 }
 
 function printHelp(): void {

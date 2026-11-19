@@ -1,7 +1,7 @@
 {
   "name": "@sebastienrousseau/pm2md-workspace",
   "private": true,
-  "version": "0.0.6",
+  "version": "0.0.4",
   "description": "Generates a markdown documentation from a Postman collection file.",
   "homepage": "https://pm2md.com",
   "keywords": [

@@ -1,6 +1,6 @@
 {
   "name": "@sebastienrousseau/pm2md-core",
-  "version": "0.0.6",
+  "version": "0.0.4",
   "description": "Core API specification parser, canonical IR, secret redactor, and Markdown renderer for PM2MD.",
   "homepage": "https://pm2md.com",
   "keywords": [

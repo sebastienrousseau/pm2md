@@ -1,6 +1,6 @@
 {
   "name": "@sebastienrousseau/pm2md",
-  "version": "0.0.6",
+  "version": "0.0.4",
   "description": "Generates markdown documentation from Postman collections and API specifications.",
   "homepage": "https://pm2md.com",
   "keywords": [
