@@ -123,6 +123,14 @@ importers:
         specifier: ^5.2.2
         version: 5.9.3
 
+  packages/pm2md:
+    dependencies:
+      '@sebastienrousseau/pm2md-core':
+        specifier: workspace:*
+        version: link:../pm2md-core
+
+  packages/pm2md-core: {}
+
 packages:
 
   '@babel/code-frame@7.29.7':

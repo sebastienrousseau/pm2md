@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.5] - 2026-11-18
+
+### Added
+
+- Converted repository into a `pnpm` workspace monorepo with `@sebastienrousseau/pm2md-core` and `@sebastienrousseau/pm2md` in lockstep `0.0.5` versioning.
+- Added canonical `ApiDocument` Intermediate Representation (`packages/pm2md-core/src/ir/types.ts`), `parsePostmanToIR`, and `renderMarkdownFromIR`.
+- Added default-on secret redaction (`redactValue`) for sensitive auth/header values while preserving `{{variable}}` placeholders (`--no-redact` opt-out).
+- Added `--toc` Table of Contents generation in `pm2md` CLI and `renderMarkdownFromIR`.
+
+### Changed
+
+- Refactored `packages/pm2md` CLI and library exports to consume `@sebastienrousseau/pm2md-core`.
+- Updated `jest.config.cjs` and root workspace scripts for monorepo builds, linting, and testing.
+
 ## [0.0.4] - 2026-11-18
 
 ### Added
