@@ -109,6 +109,6 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64 # v3.0.3
         with:
-          name: "pm2md ${GITHUB_REF_NAME#v}"
+          name: "${{ github.event.repository.name }} ${GITHUB_REF_NAME#v}"
           body_path: release-notes.md
           files: release-assets/*.tgz
