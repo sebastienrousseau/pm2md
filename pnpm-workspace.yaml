@@ -1,3 +1,7 @@
+packages:
+  - 'packages/*'
+  - '!**/__tests__/**'
+
 allowBuilds:
   unrs-resolver: true
 # Security overrides: transitive packages with published advisories.

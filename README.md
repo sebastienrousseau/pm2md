@@ -6,11 +6,11 @@
 [![codacy][codacy]][9]
 [![contributors][contributors-shield]][contributors-url]
 [![forks][forks-shield]][forks-url]
-[![license](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge\&color=ff69b4)][4]
+[![license](https://img.shields.io/badge/License-Apache--2.0%20OR%20MIT-green.svg?style=for-the-badge\&color=ff69b4)](LICENSE)
 ![made with love][7]
 [![npm](https://img.shields.io/npm/v/@sebastienrousseau/pm2md.svg?style=for-the-badge\&color=f14041)](https://www.npmjs.com/package/@sebastienrousseau/pm2md)
 
-**[Website][0] • [Documentation](https://pm2md/docs/)
+**[Website][0] • [Documentation](https://pm2md.com/docs/)
 • [Report Bug](https://github.com/sebastienrousseau/pm2md/issues)
 • [Request Feature](https://github.com/sebastienrousseau/pm2md/issues)
 • [Contributing Guidelines](https://github.com/sebastienrousseau/pm2md/blob/master/.github/CONTRIBUTING.md)**
@@ -41,7 +41,7 @@ it on your computer. Alternatively, you can use the [web version][2] of Postman.
 You can install Postman2Markdown globally using npm:
 
 ```bash
-npm install -g pm2md
+npm install -g @sebastienrousseau/pm2md
 ```
 
 ## Usage
@@ -50,21 +50,23 @@ To generate markdown documentation from a Postman collection, run the following
 command in your terminal, specifying the path to your collection file:
 
 ```bash
-pm2md postman_collection.json
+pm2md examples/Twitter_API_v2.postman_collection.json
 ```
 
-```bash
-Reading file examples/postman_collection.json
-Generating markdown file ...
-Documentation was created correctly examples/postman_collection.md
+```text
+PM2MD
+https://pm2md.com/
 
+❯ Reading file examples/Twitter_API_v2.postman_collection.json
+❯ Generating markdown file ...
+❯ Wrote to examples/Twitter_API_v2.md
 ```
 
 This will read the specified Postman collection file, generate the corresponding
 markdown documentation, and save it as an `.md` file.
 
-Example of file generated
-[postman_collection.md](examples/postman_collection.md)
+Example of file generated:
+[Twitter_API_v2.md](examples/Twitter_API_v2.md)
 
 ## Versioning & Updates
 
@@ -92,7 +94,7 @@ Our beliefs:
 
 ## Licensing
 
-This project embraces the MIT License. View [LICENSE details](LICENSE).
+This project is dual-licensed under the [Apache-2.0](LICENSE-APACHE) or [MIT](LICENSE-MIT) license. View [LICENSE details](LICENSE).
 
 ## Shoutouts & Credits
 

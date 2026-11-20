@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.json",
+  "include": ["packages/*/src/**/*.ts", "packages/*/__tests__/**/*.ts"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@sebastienrousseau/pm2md-core": ["./packages/pm2md-core/src/index.ts"]
+    }
+  }
+}

@@ -5,6 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.4] - 2026-11-19
+
+### Added
+
+- Converted repository into a `pnpm` workspace monorepo with `@sebastienrousseau/pm2md-core` and `@sebastienrousseau/pm2md` in lockstep `0.0.4` versioning.
+- Added canonical `ApiDocument` Intermediate Representation (`packages/pm2md-core/src/ir/types.ts`), `parsePostmanToIR`, and `renderMarkdownFromIR`.
+- Added Swagger 2.0 and OpenAPI 3.0/3.1 parsers (`parseOpenApiToIR`) with YAML support (`yaml`), cycle-safe `$ref` resolution (`dereferenceObject`), and automatic schema example synthesis.
+- Added format auto-detection (`detectSpecFormat`, `parseToIR`, `convertSpecToMarkdown`) and `--format <auto|postman|swagger|openapi>` CLI flag.
+- Added `llms.txt` and `llms-full.txt` renderers (`renderLlmsTxt`, `renderLlmsFullTxt`, `convertSpecToLlmsTxt`) and `--llms-txt` / `--llms-full` CLI flags.
+- Added default-on secret redaction (`redactValue`) for sensitive auth/header values while preserving `{{variable}}` placeholders (`--no-redact` opt-out).
+- Added CLI flags (`--output`, `--stdout`, `--toc`, `--no-redact`, `--no-footer`, `--quiet`, `--version`, `--help`) using built-in `node:util` `parseArgs`.
+- Added support for `urlencoded`, `graphql`, and `file` request bodies, path variables (`url.variable`), all Postman auth types, multiple response examples, Markdown table-cell escaping, dynamic code-fence sizing, and folder heading depth clamping.
+
+### Changed
+
+- Eliminated legacy runtime `dependencies` (`minimist`, `typescript`, `prettier`, `nodemon`, `rimraf`, `ts-node`, `jsmin`, `filesizes`), keeping only `yaml` in `pm2md-core`.
+- Fixed `readRequestOptions` to emit a single `### Headers` table instead of repeating headings per header.
+- Fixed `writeFile` to write relative to the target/input path instead of hardcoding `./dist`, and set non-zero exit codes on CLI errors.
+- Updated `@types/node` to `^22.0.0`, rewrote unit/integration tests, and aligned `README.md` documentation and license references.
+
 ## [0.0.3] - 2026-10-13
 
 ### Added
