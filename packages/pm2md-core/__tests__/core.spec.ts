@@ -30,8 +30,8 @@ describe("pm2md-core security & escaping helpers", () => {
     });
   });
 
-  test("escapeTableCell escapes pipes and collapses newlines", () => {
-    expect(escapeTableCell("a | b\nc\r\nd")).toBe("a \\| b<br/>c<br/>d");
+  test("escapeTableCell escapes backslashes, pipes, and collapses newlines", () => {
+    expect(escapeTableCell("a\\b | c\nd\r\ne")).toBe("a\\\\b \\| c<br/>d<br/>e");
   });
 
   test("formatCodeBlock dynamically sizes fences around nested backticks", () => {

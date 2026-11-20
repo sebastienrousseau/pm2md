@@ -16,7 +16,7 @@ const FOOTER =
   "____________________________\nPowered by: [pm2md](https://pm2md.com)\n";
 
 /**
- * Escape pipe characters and collapse newlines for safe Markdown table cells.
+ * Escape backslashes and pipe characters, and collapse newlines for safe Markdown table cells.
  */
 export function escapeTableCell(value: unknown): string {
   if (value === undefined || value === null) {
@@ -24,6 +24,7 @@ export function escapeTableCell(value: unknown): string {
   }
   return String(value)
     .replace(/\\n/g, " ")
+    .replace(/\\/g, "\\\\")
     .replace(/\r?\n/g, "<br/>")
     .replace(/\|/g, "\\|");
 }
